@@ -10,5 +10,8 @@ export async function GET(res, { params }) {
       },
     },
   });
+  if (!teacher)
+    return NextResponse.json({ error: "Teacher not found" }, { status: 404 });
+
   return NextResponse.json(teacher);
 }

@@ -45,7 +45,7 @@ export async function POST(req, res) {
     if (error instanceof z.ZodError) {
       const errors = error?.format();
       return NextResponse.json(
-        { message: JSON.stringify(errors) },
+        { errors },
         {
           status: 400,
         }
