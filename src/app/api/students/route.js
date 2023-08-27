@@ -9,6 +9,7 @@ const studentSchema = z.object({
   gender: z.enum(["m", "f"]),
   email: z.string().email().min(5),
   teacherId: z.number(),
+  password: z.string(),
 });
 
 export async function GET(req) {

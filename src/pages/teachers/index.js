@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Link from "next/link";
 
 export default function Teachers() {
   const [teachers, setTeachers] = useState([]);
@@ -46,7 +47,9 @@ export default function Teachers() {
           return (
             <TableRow key={teacher?.id}>
               <TableCell className="font-medium">
-                {teacher?.firstName}
+                <Link href={`/teachers/${teacher?.id}`}>
+                  {teacher?.firstName}
+                </Link>
               </TableCell>
               <TableCell className="font-medium">{teacher?.lastName}</TableCell>
               <TableCell className="font-medium">{teacher?.age}</TableCell>

@@ -24,6 +24,7 @@ model Student {
   age Int
   gender String
   email String @unique
+  password String
   teacherId Int @map("teacher_id")
   teacher Teacher @relation(fields: [teacherId], references: [id])
 }
@@ -35,5 +36,6 @@ model Teacher {
   age Int
   gender String
   email String @unique
+  password String
   students Student[]
 }

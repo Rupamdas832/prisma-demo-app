@@ -3,6 +3,7 @@ import { prisma } from "../../db/db";
 import { z } from "zod";
 import { cookies } from "next/headers";
 import { verify } from "@/utils/jwt";
+import { hash } from "@/utils/hash";
 
 const teacherSchema = z.object({
   firstName: z.string(),
@@ -10,6 +11,7 @@ const teacherSchema = z.object({
   age: z.number().min(21).max(60),
   gender: z.enum(["m", "f"]),
   email: z.string().email().min(5),
+  password: z.string().min(6),
 });
 
 export async function GET() {
@@ -22,8 +24,13 @@ export async function POST(req, res) {
 
   try {
     const validatedNewData = teacherSchema.parse(requestBody);
+    const passwordHash = await hash(validatedNewData.password);
+
     const newTeacher = await prisma.teacher.create({
-      data: validatedNewData,
+      data: {
+        ...validatedNewData,
+        password: passwordHash,
+      },
     });
 
     return NextResponse.json(newTeacher);
