@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../db/db";
 import { z } from "zod";
+import { cookies } from "next/headers";
+import { verify } from "@/utils/jwt";
 
 const teacherSchema = z.object({
   firstName: z.string(),

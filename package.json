@@ -10,11 +10,24 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.0",
     "@prisma/client": "^5.1.1",
+    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-slot": "^1.0.2",
+    "bcrypt": "^5.1.1",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "jose": "^4.14.4",
+    "jsonwebtoken": "^9.0.1",
+    "lucide-react": "^0.269.0",
     "next": "13.4.13",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "zod": "^3.21.4"
+    "react-hook-form": "^7.45.4",
+    "tailwind": "^4.0.0",
+    "tailwind-merge": "^1.14.0",
+    "tailwindcss-animate": "^1.0.6",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "prisma": "^5.1.1"
