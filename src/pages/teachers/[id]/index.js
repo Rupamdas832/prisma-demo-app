@@ -35,6 +35,9 @@ export default function Teacher() {
       <Button type="submit">
         <Link href="/teachers">Teachers</Link>
       </Button>
+      <Button type="submit">
+        <Link href="/students">Students</Link>
+      </Button>
       <div>
         <p>Teacher #{teacherData?.id}</p>
         <Button type="submit">

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../db/db";
 import { z } from "zod";
+import { hash } from "@/utils/hash";
 
 const studentSchema = z.object({
   firstName: z.string(),
@@ -37,8 +38,13 @@ export async function POST(req, res) {
 
   try {
     const validatedNewData = studentSchema.parse(requestBody);
+    const passwordHash = await hash(validatedNewData.password);
+
     const newStudent = await prisma.student.create({
-      data: validatedNewData,
+      data: {
+        ...validatedNewData,
+        password: passwordHash,
+      },
     });
 
     return NextResponse.json(newStudent);

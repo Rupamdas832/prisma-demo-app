@@ -29,14 +29,41 @@ const teacherAccessLevel = async (req) => {
   return false;
 };
 
-const teacherAccessJwt = async (req) => {
+const teacherEditAccess = async (req, id) => {
   const token = req.cookies.get("token");
   if (!token) {
     return false;
   }
   const jwt = await verify(token.value);
 
-  return jwt;
+  if (jwt && Number(jwt.payload?.teacherId) === Number(id)) {
+    return true;
+  }
+  return false;
+};
+
+const studentEditAccess = async (req, id) => {
+  const token = req.cookies.get("token");
+  if (!token) {
+    return false;
+  }
+  const jwt = await verify(token.value);
+  console.log("jwt", jwt);
+
+  if (
+    jwt &&
+    (jwt.payload.accessLevel === "teacher" ||
+      jwt.payload.accessLevel === "admin")
+  ) {
+    return true;
+  } else if (
+    jwt &&
+    jwt.payload.accessLevel === "student" &&
+    Number(jwt.payload?.studentId) === Number(id)
+  ) {
+    return true;
+  }
+  return false;
 };
 
 const studentAccessLevel = async (req) => {
@@ -48,6 +75,7 @@ const studentAccessLevel = async (req) => {
   if (
     jwt &&
     (jwt.payload.accessLevel === "student" ||
+      jwt.payload.accessLevel === "teacher" ||
       jwt.payload.accessLevel === "admin")
   ) {
     return true;
@@ -57,7 +85,11 @@ const studentAccessLevel = async (req) => {
 
 const PATTERNS = [
   [
-    new URLPattern({ pathname: "/teachers/[id]/edit" }),
+    new URLPattern({ pathname: "/teachers/:id/edit" }),
+    ({ pathname }) => pathname.groups,
+  ],
+  [
+    new URLPattern({ pathname: "/students/:id/edit" }),
     ({ pathname }) => pathname.groups,
   ],
 ];
@@ -84,14 +116,10 @@ export async function middleware(req) {
     if (!(await teacherAccessLevel(req)))
       return NextResponse.redirect(new URL("/login/teachers", req.url));
 
-    console.log("dddd", req.nextUrl.pathname.startsWith("/teachers/:id/edit"));
-    if (req.nextUrl.pathname.startsWith("/teachers/[id]/edit")) {
-      const { id } = params(req.url);
-      console.log("sssss", id);
-      if ((await teacherAccessJwt) === id) {
-        console.log("auth");
-      } else {
-        console.log("not auth");
+    const { id } = params(req.url);
+    if (req.nextUrl.pathname === `/teachers/${id}/edit`) {
+      if (!(await teacherEditAccess(req, id))) {
+        return NextResponse.redirect(new URL(`/teachers/${id}`, req.url));
       }
     }
   }
@@ -101,5 +129,12 @@ export async function middleware(req) {
   ) {
     if (!(await studentAccessLevel(req)))
       return NextResponse.redirect(new URL("/login/students", req.url));
+
+    const { id } = params(req.url);
+    if (req.nextUrl.pathname === `/students/${id}/edit`) {
+      if (!(await studentEditAccess(req, id))) {
+        return NextResponse.redirect(new URL(`/students/${id}`, req.url));
+      }
+    }
   }
 }
