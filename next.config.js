@@ -19,10 +19,6 @@ const nextConfig = {
             value: "SAMEORIGIN",
           },
           {
-            key: "Permissions-Policy",
-            value: "",
-          },
-          {
             key: "X-Content-Type-Options",
             value: "nosniff",
           },
