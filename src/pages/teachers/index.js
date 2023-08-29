@@ -14,8 +14,9 @@ export default function Teachers() {
   const [teachers, setTeachers] = useState([]);
 
   const fetchData = async () => {
+    const origin = window.location.origin;
     try {
-      const res = await fetch("http://localhost:3000/api/teachers");
+      const res = await fetch(origin + "/api/teachers");
       const data = await res.json();
       if (Array.isArray(data)) {
         setTeachers(data);

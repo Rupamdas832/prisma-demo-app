@@ -9,14 +9,12 @@ export default function Student() {
   const [studentData, setStudentData] = useState({});
 
   const fetchData = async (studentId) => {
+    const origin = window.location.origin;
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/students/${studentId}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const res = await fetch(origin + `/api/students/${studentId}`, {
+        method: "GET",
+        credentials: "include",
+      });
       const data = await res.json();
       setStudentData(data);
     } catch (error) {

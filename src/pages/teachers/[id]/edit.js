@@ -13,14 +13,12 @@ export default function TeacherEdit() {
   const [gender, setGender] = useState("");
 
   const fetchData = async (teacherId) => {
+    const origin = window.location.origin;
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/teachers/${teacherId}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const res = await fetch(origin + `/api/teachers/${teacherId}`, {
+        method: "GET",
+        credentials: "include",
+      });
       const data = await res.json();
       setFirstName(data?.firstName);
       setLastName(data?.lastName);
@@ -33,15 +31,13 @@ export default function TeacherEdit() {
   };
 
   const updateData = async (teacherId, payload) => {
+    const origin = window.location.origin;
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/teachers/${teacherId}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(payload),
-          credentials: "include",
-        }
-      );
+      const res = await fetch(origin + `/api/teachers/${teacherId}`, {
+        method: "PUT",
+        body: JSON.stringify(payload),
+        credentials: "include",
+      });
       const data = await res.json();
       if (res.status === 200) {
         back();

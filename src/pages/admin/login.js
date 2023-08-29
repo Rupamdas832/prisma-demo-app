@@ -9,8 +9,9 @@ export default function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    const origin = window.location.origin;
 
-    fetch("http://localhost:3000/api/admin/login", {
+    fetch(origin + "/api/admin/login", {
       body: JSON.stringify({
         email,
         password,

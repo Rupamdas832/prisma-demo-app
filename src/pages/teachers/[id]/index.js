@@ -9,14 +9,12 @@ export default function Teacher() {
   const [teacherData, setTeacherData] = useState({});
 
   const fetchData = async (teacherId) => {
+    const origin = window.location.origin;
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/teachers/${teacherId}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const res = await fetch(origin + `/api/teachers/${teacherId}`, {
+        method: "GET",
+        credentials: "include",
+      });
       const data = await res.json();
       setTeacherData(data);
     } catch (error) {

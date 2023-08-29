@@ -13,14 +13,12 @@ export default function StudentEdit() {
   const [gender, setGender] = useState("");
 
   const fetchData = async (studentId) => {
+    const origin = window.location.origin;
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/students/${studentId}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const res = await fetch(origin + `/api/students/${studentId}`, {
+        method: "GET",
+        credentials: "include",
+      });
       const data = await res.json();
       setFirstName(data?.firstName);
       setLastName(data?.lastName);
@@ -33,15 +31,13 @@ export default function StudentEdit() {
   };
 
   const updateData = async (studentId, payload) => {
+    const origin = window.location.origin;
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/students/${studentId}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(payload),
-          credentials: "include",
-        }
-      );
+      const res = await fetch(origin + `/api/students/${studentId}`, {
+        method: "PUT",
+        body: JSON.stringify(payload),
+        credentials: "include",
+      });
       const data = await res.json();
       if (res.status === 200) {
         back();

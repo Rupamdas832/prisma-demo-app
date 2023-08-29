@@ -14,8 +14,9 @@ export default function Students() {
   const [students, setStudents] = useState([]);
 
   const fetchData = async () => {
+    const origin = window.location.origin;
     try {
-      const res = await fetch("http://localhost:3000/api/students");
+      const res = await fetch(origin + "/api/students");
       const data = await res.json();
       if (Array.isArray(data)) {
         setStudents(data);

@@ -9,8 +9,9 @@ export default function StudentLogin() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    const origin = window.location.origin;
 
-    fetch("http://localhost:3000/api/login/students", {
+    fetch(origin + "/api/login/students", {
       body: JSON.stringify({
         email,
         password,
