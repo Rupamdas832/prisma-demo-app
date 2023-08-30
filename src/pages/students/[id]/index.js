@@ -1,3 +1,4 @@
+import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -29,10 +30,7 @@ export default function Student() {
   }, [id]);
 
   return (
-    <div>
-      <Button type="submit">
-        <Link href="/students">Students</Link>
-      </Button>
+    <Layout>
       <div>
         <p>Student #{studentData?.id}</p>
         <Button type="submit">
@@ -47,6 +45,6 @@ export default function Student() {
       <p>Age: {studentData?.age}</p>
       <p>Gender: {studentData?.gender}</p>
       <p>Teacher id: {studentData?.teacherId}</p>
-    </div>
+    </Layout>
   );
 }

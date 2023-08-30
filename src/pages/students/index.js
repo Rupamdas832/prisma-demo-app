@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
+import Layout from "@/components/layout/Layout";
 
 export default function Students() {
   const [students, setStudents] = useState([]);
@@ -33,36 +34,40 @@ export default function Students() {
   }, []);
 
   return (
-    <Table>
-      <TableCaption>A list of Students.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">First name</TableHead>
-          <TableHead>Last name</TableHead>
-          <TableHead>Age</TableHead>
-          <TableHead className="text-right">Gender</TableHead>
-          <TableHead className="text-right">Teacher Id</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {students.map((student) => {
-          return (
-            <TableRow key={student?.id}>
-              <TableCell className="font-medium">
-                <Link href={`/students/${student?.id}`}>
-                  {student?.firstName}
-                </Link>
-              </TableCell>
-              <TableCell className="font-medium">{student?.lastName}</TableCell>
-              <TableCell className="font-medium">{student?.age}</TableCell>
-              <TableCell className="font-medium">{student?.gender}</TableCell>
-              <TableCell className="font-medium">
-                {student?.teacherId}
-              </TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
+    <Layout>
+      <Table>
+        <TableCaption>A list of Students.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">First name</TableHead>
+            <TableHead>Last name</TableHead>
+            <TableHead>Age</TableHead>
+            <TableHead className="text-right">Gender</TableHead>
+            <TableHead className="text-right">Teacher Id</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {students.map((student) => {
+            return (
+              <TableRow key={student?.id}>
+                <TableCell className="font-medium">
+                  <Link href={`/students/${student?.id}`}>
+                    {student?.firstName}
+                  </Link>
+                </TableCell>
+                <TableCell className="font-medium">
+                  {student?.lastName}
+                </TableCell>
+                <TableCell className="font-medium">{student?.age}</TableCell>
+                <TableCell className="font-medium">{student?.gender}</TableCell>
+                <TableCell className="font-medium">
+                  {student?.teacherId}
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </Layout>
   );
 }

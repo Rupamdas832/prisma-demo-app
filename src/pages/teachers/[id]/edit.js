@@ -1,3 +1,4 @@
+import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -61,7 +62,7 @@ export default function TeacherEdit() {
   };
 
   return (
-    <div>
+    <Layout>
       <Button type="submit" onClick={back}>
         Back
       </Button>
@@ -96,6 +97,6 @@ export default function TeacherEdit() {
           Update
         </Button>
       </div>
-    </div>
+    </Layout>
   );
 }
