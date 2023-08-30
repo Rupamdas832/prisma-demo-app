@@ -34,18 +34,6 @@ export default function Student() {
     }
   }, [id]);
 
-  const isEditable = useMemo(() => {
-    if (localStorage.getItem("userAccess") === "teacher") {
-      return true;
-    } else if (
-      localStorage.getItem("userAccess") === "student" &&
-      localStorage.getItem("userId") === id
-    ) {
-      return true;
-    }
-    return false;
-  }, [localStorage.getItem("userId")]);
-
   return (
     <Layout>
       {isLoading ? (
@@ -54,11 +42,9 @@ export default function Student() {
         <div>
           <div>
             <p>Student #{studentData?.id}</p>
-            {isEditable && (
-              <Button type="submit">
-                <Link href={`/students/${studentData?.id}/edit`}>Edit</Link>
-              </Button>
-            )}
+            <Button type="submit">
+              <Link href={`/students/${studentData?.id}/edit`}>Edit</Link>
+            </Button>
           </div>
 
           <p>

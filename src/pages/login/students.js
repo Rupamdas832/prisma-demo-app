@@ -28,8 +28,6 @@ export default function StudentLogin() {
       const data = await res.json();
       if (res.status === 200) {
         Router.replace(`/students/${data?.id}`);
-        localStorage.setItem("userId", data?.id);
-        localStorage.setItem("userAccess", "student");
       } else if (res.status === 400) {
         setIsError(data.error);
       }

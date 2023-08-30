@@ -28,8 +28,6 @@ export default function TeacherLogin() {
       const data = await res.json();
       if (res.status === 200) {
         Router.push(`/teachers/${data?.id}`);
-        localStorage.setItem("userId", data?.id);
-        localStorage.setItem("userAccess", "teacher");
       } else if (res.status === 400) {
         setIsError(data.error);
       }
