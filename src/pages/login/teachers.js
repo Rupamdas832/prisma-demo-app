@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import { useState } from "react";
 
 export default function TeacherLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -22,7 +21,7 @@ export default function TeacherLogin() {
     })
       .then(async (res) => await res.json())
       .then((data) => {
-        router.push(`/teachers/${data?.id}`);
+        Router.push(`/teachers/${data?.id}`);
       });
   };
 

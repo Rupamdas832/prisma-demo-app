@@ -7,22 +7,26 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const origin = window.location.origin;
 
-    fetch(origin + "/api/admin/login", {
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-      method: "POST",
-      credentials: "include",
-    })
-      .then(async (res) => await res.json())
-      .then((data) => {
-        Router.replace("/teachers");
+    try {
+      const res = await fetch(origin + "/api/admin/login", {
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        method: "POST",
+        credentials: "include",
       });
+      const data = await res.json();
+      if (res.status === 200) {
+        Router.replace("/teachers");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
