@@ -20,10 +20,10 @@ export default function Home() {
           <p>Login as</p>
           <div>
             <Button variant="outline">
-              <Link href="/teachers/login">Teacher</Link>
+              <Link href="/login/teachers">Teacher</Link>
             </Button>
             <Button variant="outline">
-              <Link href="/students/login">Student</Link>
+              <Link href="/login/students">Student</Link>
             </Button>
           </div>
         </div>

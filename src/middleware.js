@@ -109,6 +109,7 @@ const params = (url) => {
 };
 
 export async function middleware(req) {
+  // teachers route
   if (
     req.nextUrl.pathname.startsWith("/teachers") ||
     req.nextUrl.pathname.startsWith("/api/teachers")
@@ -123,6 +124,8 @@ export async function middleware(req) {
       }
     }
   }
+
+  // students route
   if (
     req.nextUrl.pathname.startsWith("/students") ||
     req.nextUrl.pathname.startsWith("/api/students")
@@ -136,5 +139,19 @@ export async function middleware(req) {
         return NextResponse.redirect(new URL(`/students/${id}`, req.url));
       }
     }
+  }
+
+  // login route
+  if (
+    req.nextUrl.pathname === "/login/teachers" &&
+    (await teacherAccessLevel(req))
+  ) {
+    return NextResponse.redirect(new URL("/teachers", req.url));
+  }
+  if (
+    req.nextUrl.pathname === "/login/students" &&
+    (await studentAccessLevel(req))
+  ) {
+    return NextResponse.redirect(new URL("/students", req.url));
   }
 }

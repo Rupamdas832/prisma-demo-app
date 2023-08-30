@@ -11,7 +11,7 @@ export default function StudentEdit() {
   const [email, setEmail] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async (studentId) => {
     const origin = window.location.origin;

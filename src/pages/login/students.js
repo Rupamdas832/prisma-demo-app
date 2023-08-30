@@ -7,23 +7,37 @@ import { useState } from "react";
 export default function StudentLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(null);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setIsError(null);
     const origin = window.location.origin;
 
-    fetch(origin + "/api/login/students", {
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-      method: "POST",
-      credentials: "include",
-    })
-      .then(async (res) => await res.json())
-      .then((data) => {
-        Router.replace(`/students/${data?.id}`);
+    try {
+      const res = await fetch(origin + "/api/login/students", {
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        method: "POST",
+        credentials: "include",
       });
+      const data = await res.json();
+      if (res.status === 200) {
+        Router.replace(`/students/${data?.id}`);
+        localStorage.setItem("userId", data?.id);
+        localStorage.setItem("userAccess", "student");
+      } else if (res.status === 400) {
+        setIsError(data.error);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -32,7 +46,15 @@ export default function StudentLogin() {
         <Link href="/">Back</Link>
       </Button>
       <p>Student Login:</p>
-      <form onSubmit={onSubmit}>
+      <form
+        onSubmit={onSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "start",
+        }}
+      >
+        <label style={{ marginTop: "1rem" }}>Email</label>
         <Input
           type="email"
           placeholder="email"
@@ -40,6 +62,7 @@ export default function StudentLogin() {
           onChange={(e) => setEmail(e.target.value)}
           name="email"
         />
+        <label style={{ marginTop: "1rem" }}>Password</label>
         <Input
           type="password"
           value={password}
@@ -47,7 +70,13 @@ export default function StudentLogin() {
           placeholder="password"
           name="password"
         />
-        <Button type="submit">Submit</Button>
+        <Button
+          type="submit"
+          style={{ marginTop: "1rem", marginBottom: "1rem" }}
+        >
+          {isLoading ? "Submitting" : "Submit"}
+        </Button>
+        {isError ? isError : ""}
       </form>
     </div>
   );

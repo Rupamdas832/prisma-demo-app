@@ -2,13 +2,13 @@ import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Student() {
   const { query } = useRouter();
   const id = query["id"];
   const [studentData, setStudentData] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async (studentId) => {
     const origin = window.location.origin;
@@ -34,6 +34,18 @@ export default function Student() {
     }
   }, [id]);
 
+  const isEditable = useMemo(() => {
+    if (localStorage.getItem("userAccess") === "teacher") {
+      return true;
+    } else if (
+      localStorage.getItem("userAccess") === "student" &&
+      localStorage.getItem("userId") === id
+    ) {
+      return true;
+    }
+    return false;
+  }, [localStorage.getItem("userId")]);
+
   return (
     <Layout>
       {isLoading ? (
@@ -42,9 +54,11 @@ export default function Student() {
         <div>
           <div>
             <p>Student #{studentData?.id}</p>
-            <Button type="submit">
-              <Link href={`/students/${studentData?.id}/edit`}>Edit</Link>
-            </Button>
+            {isEditable && (
+              <Button type="submit">
+                <Link href={`/students/${studentData?.id}/edit`}>Edit</Link>
+              </Button>
+            )}
           </div>
 
           <p>

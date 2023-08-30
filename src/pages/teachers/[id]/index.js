@@ -8,7 +8,7 @@ export default function Teacher() {
   const { query } = useRouter();
   const id = query["id"];
   const [teacherData, setTeacherData] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async (teacherId) => {
     const origin = window.location.origin;

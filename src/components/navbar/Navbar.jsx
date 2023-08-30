@@ -12,6 +12,8 @@ const Navbar = () => {
       const data = await res.json();
       if (res.status === 200) {
         window.location.reload();
+        localStorage.clear("userId");
+        localStorage.clear("userAccess");
       }
     } catch (error) {
       console.log(error);

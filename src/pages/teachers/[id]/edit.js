@@ -12,7 +12,7 @@ export default function TeacherEdit() {
   const [email, setEmail] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async (teacherId) => {
     const origin = window.location.origin;
