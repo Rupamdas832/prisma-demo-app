@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 import Router from "next/router";
 import { useState } from "react";
 
@@ -27,6 +28,9 @@ export default function TeacherLogin() {
 
   return (
     <div>
+      <Button>
+        <Link href="/">Back</Link>
+      </Button>
       <p>Teacher Login:</p>
       <form onSubmit={onSubmit}>
         <Input

@@ -13,9 +13,12 @@ import Layout from "@/components/layout/Layout";
 
 export default function Students() {
   const [students, setStudents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async () => {
     const origin = window.location.origin;
+    setIsLoading(true);
+
     try {
       const res = await fetch(origin + "/api/students");
       const data = await res.json();
@@ -26,6 +29,8 @@ export default function Students() {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -46,27 +51,33 @@ export default function Students() {
             <TableHead className="text-right">Teacher Id</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
-          {students.map((student) => {
-            return (
-              <TableRow key={student?.id}>
-                <TableCell className="font-medium">
-                  <Link href={`/students/${student?.id}`}>
-                    {student?.firstName}
-                  </Link>
-                </TableCell>
-                <TableCell className="font-medium">
-                  {student?.lastName}
-                </TableCell>
-                <TableCell className="font-medium">{student?.age}</TableCell>
-                <TableCell className="font-medium">{student?.gender}</TableCell>
-                <TableCell className="font-medium">
-                  {student?.teacherId}
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <TableBody>
+            {students.map((student) => {
+              return (
+                <TableRow key={student?.id}>
+                  <TableCell className="font-medium">
+                    <Link href={`/students/${student?.id}`}>
+                      {student?.firstName}
+                    </Link>
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    {student?.lastName}
+                  </TableCell>
+                  <TableCell className="font-medium">{student?.age}</TableCell>
+                  <TableCell className="font-medium">
+                    {student?.gender}
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    {student?.teacherId}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        )}
       </Table>
     </Layout>
   );

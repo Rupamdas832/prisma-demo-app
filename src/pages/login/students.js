@@ -27,6 +27,9 @@ export default function StudentLogin() {
 
   return (
     <div>
+      <Button>
+        <Link href="/">Back</Link>
+      </Button>
       <p>Student Login:</p>
       <form onSubmit={onSubmit}>
         <Input

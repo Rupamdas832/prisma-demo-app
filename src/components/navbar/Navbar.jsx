@@ -28,7 +28,7 @@ const Navbar = () => {
         borderBottom: "1px solid white",
       }}
     >
-      <p>School</p>
+      <p>Pathsalla</p>
       <div>
         <Button type="submit">
           <Link href="/teachers">Teachers</Link>
